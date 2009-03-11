@@ -47,6 +47,7 @@ module Polonium
       configuration.browser = "iexplore"
       configuration.external_app_server_host = "browser_host.com"
       configuration.external_app_server_port = 80
+      configuration.selenium_client_timeout = 10000
 
       driver = configuration.create_driver
       driver.server_host.should == "selenium_server_host.com"
@@ -174,6 +175,10 @@ module Polonium
       configuration.send(env_var).should == true
     end
 
+    it "initializes selenium_client_timeout" do
+      should_establish_environment('selenium_client_timeout', 10000)
+    end
+
     it "internal_app_server_host" do
       should_lazily_load configuration, :internal_app_server_host, "0.0.0.0"
     end
@@ -196,6 +201,10 @@ module Polonium
 
     it "keep_browser_open_on_failure" do
       should_lazily_load configuration, :keep_browser_open_on_failure, false
+    end
+
+    it "selenium_client_timeout" do
+      should_lazily_load configuration, :selenium_client_timeout, 15000
     end
 
     it "formatted_browser" do
