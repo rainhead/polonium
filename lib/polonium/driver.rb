@@ -22,12 +22,12 @@ module Polonium
 
     def insert_javascript_file(uri)
       js = <<-USEREXTENSIONS
-      var headTag = document.getElementsByTagName("head").item(0);
+      alert("FNORD");
       var scriptTag = document.createElement("script");
-      scriptTag.src = "#{uri}";
-      headTag.appendChild( scriptTag );
+      scriptTag.setAttribute('src', "#{uri}");
+      document.body.appendChild( scriptTag );
       USEREXTENSIONS
-      get_eval(js)
+      run_script(js)
     end
 
     def insert_user_extensions
