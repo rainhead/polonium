@@ -22,7 +22,6 @@ module Polonium
 
     def insert_javascript_file(uri)
       js = <<-USEREXTENSIONS
-      alert("FNORD");
       var scriptTag = document.createElement("script");
       scriptTag.setAttribute('src', "#{uri}");
       document.body.appendChild( scriptTag );
