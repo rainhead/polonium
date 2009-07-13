@@ -114,7 +114,7 @@ module Polonium
       params = {
         :message => "Expected element '#{locator}' to be absent, but it was not"
       }.merge(params)
-      wait_for(:message => params[:message]) do
+      wait_for(params) do
         !is_element_present(locator)
       end
     end
