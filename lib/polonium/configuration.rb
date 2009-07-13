@@ -29,6 +29,7 @@ module Polonium
       # * internal_app_server_host - The port for the Application server that the Browser will access (default: 4000)
       # * keep_browser_open_on_failure - If there is a failure in the test suite, keep the browser window open (default: false)
       # * verify_remote_app_server_is_running - Raise an exception if the Application Server is not running (default: true)
+      # * selenium_client_timeout - The number of milliseconds to wait for a response from the Selenium RC server after each command (default: 15000)
       def instance
         @instance ||= begin
           @instance = new
@@ -46,6 +47,7 @@ module Polonium
           @instance.keep_browser_open_on_failure = false
           @instance.browser_mode = BrowserMode::Suite
           @instance.verify_remote_app_server_is_running = true
+          @instance.selenium_client_timeout = 15000
 
           establish_environment
           @instance
@@ -64,7 +66,8 @@ module Polonium
           'internal_app_server_host',
           'app_server_engine',
           'external_app_server_host',
-          'external_app_server_port'
+          'external_app_server_port',
+          'selenium_client_timeout'
         ].each do |env_key|
           if env.include?(env_key)
             instance.send("#{env_key}=", env[env_key])
@@ -103,7 +106,8 @@ module Polonium
       :server_engine,
       :keep_browser_open_on_failure,
       :verify_remote_app_server_is_running,
-      :app_server_initialization
+      :app_server_initialization,
+      :selenium_client_timeout
     )
 
     def initialize
@@ -190,7 +194,7 @@ module Polonium
         selenium_server_port,
         formatted_browser,
         browser_url,
-        15000
+        selenium_client_timeout
       )
     end
 
